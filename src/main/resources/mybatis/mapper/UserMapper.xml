@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ithinkyou.cc.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="user">
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+  </resultMap>
+  <sql id="base_column">
+    username, password, role, sex, created
+  </sql>
+  <insert id="insert" parameterType="user">
+    insert into tb_user (username, password, role, 
+      sex, created)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="base_column"/>
+    from tb_user
+  </select>
+  <select id="selectUser" resultMap="BaseResultMap">
+    select <include refid="base_column"/>
+      from tb_user
+    where username = #{username}
+  </select>
+</mapper>
