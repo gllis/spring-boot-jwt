@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ithinkyou.cc.mapper.UserMapper">
+<mapper namespace="cc.ithinkyou.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="user">
+    <id column="id" jdbcType="TINYINT" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="role" jdbcType="VARCHAR" property="role" />
@@ -9,21 +10,44 @@
     <result column="created" jdbcType="TIMESTAMP" property="created" />
   </resultMap>
   <sql id="base_column">
-    username, password, role, sex, created
+    id, username, password, role, sex, created
   </sql>
   <insert id="insert" parameterType="user">
-    insert into tb_user (username, password, role, 
+    insert into tb_user (username, password, role,
       sex, created)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
       #{sex,jdbcType=TINYINT}, #{created,jdbcType=TIMESTAMP})
   </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select <include refid="base_column"/>
+    from tb_user
+    where id = #{id}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select <include refid="base_column"/>
     from tb_user
   </select>
-  <select id="selectUser" resultMap="BaseResultMap">
+  <select id="selectByName" resultMap="BaseResultMap">
     select <include refid="base_column"/>
       from tb_user
     where username = #{username}
   </select>
+
+  <update id="updateByPrimaryKey" parameterType="user">
+    update tb_user
+    <set>
+      <if test="username != null and username != ''">
+        username = #{username},
+      </if>
+      <if test="password != null and password != ''">
+        password = #{password},
+      </if>
+      <if test="role != null and role != ''">
+        role = #{role},
+      </if>
+      <if test="sex != null">
+        sex = #{sex},
+      </if>
+    </set>
+  </update>
 </mapper>

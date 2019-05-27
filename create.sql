@@ -22,12 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) NOT NULL COMMENT '用户名',
   `password` varchar(32) DEFAULT NULL COMMENT '密码',
   `role` varchar(20) DEFAULT NULL COMMENT '角色',
   `sex` tinyint(4) DEFAULT NULL COMMENT '性别',
   `created` datetime DEFAULT NULL COMMENT '日期',
-  PRIMARY KEY (`username`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
